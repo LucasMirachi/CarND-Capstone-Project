@@ -113,7 +113,15 @@ class WaypointUpdater(object):
                 vel = 0.
                 
             p.twist.twist.linear.x = min(vel, wp.twist.twist.linear.x)
+            
             temp.append(p)
+
+            self.decelerate_count += 1
+        if (self.decelerate_count % 100) == 0:
+            size = len(waypoints) - 1
+            vel_start = temp[0].twist.twist.linear.x
+            vel_end = temp[size].twist.twist.linear.x
+            rospy.logwarn("DECEL: vel[0]={:.2f}, vel[{}]={:.2f}".format(vel_start, size, vel_end))
         return temp
         
     def pose_cb(self, msg):
