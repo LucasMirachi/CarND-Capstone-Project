@@ -44,7 +44,7 @@ class WaypointUpdater(object):
 
         # TODO: Add a subscriber for /traffic_waypoint and /obstacle_waypoint below
         rospy.Subscriber('/traffic_waypoint', Int32, self.traffic_cb)
-        rospy.Subscriber('/obstacle_waypoint', Waypoint, self.obstacle_cb)
+        #rospy.Subscriber('/obstacle_waypoint', Waypoint, self.obstacle_cb)
 
         self.final_waypoints_pub = rospy.Publisher('final_waypoints', Lane, queue_size=1)
         
@@ -104,6 +104,7 @@ class WaypointUpdater(object):
     def decelerate_waypoints(self, waypoints, closest_idx):
         temp = []
         for i, wp in enumerate(waypoints):
+            
             p = Waypoint()
             p.pose = wp.pose
             
